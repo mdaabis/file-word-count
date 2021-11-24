@@ -26,9 +26,7 @@ public class WordCounter {
 	
 	public static int getTotalCharactersExcludingSpaces(String text) {
 	    String textWithoutSpaces = removeSpaces(text);
-	    String[] words = textWithoutSpaces.split("");
-
-	    return words.length;
+	    return textWithoutSpaces.length();
 	}
 	
 	public static double getAverageWordLength(String text) {
