@@ -18,12 +18,19 @@ public class WordCounter {
 	
 	public static void main(String[] args) {
 	    String text = convertFileToString();
-	    System.out.println(getTotalWords(text));
-	    System.out.println(getTotalCharactersExcludingSpaces(text));
-	    System.out.println(getAverageWordLength(text));
-	    System.out.println(getWordLengthFrequency(text));
-	    System.out.println(getMostFrequentlyOccuringWordLengths(text));
-
+//	    String text = "Hello world & good morning. The date is 18/05/2016";
+	    text = cleanText(text);
+	    int wordCount = getTotalWords(text);
+	    double averageWordLength = getAverageWordLength(text);
+	    List<Map.Entry<Integer, Integer>> lengthFrequencyMap = getWordLengthFrequency(text, true);
+	    List<Map.Entry<Integer, List<Integer>>> mostFrequentLengths = new ArrayList<>(getMostFrequentlyOccuringWordLengths(text).entrySet());
+	    
+	    System.out.println("Word count = " + wordCount);
+	    System.out.println("Average word length = " + averageWordLength);
+	    for(Map.Entry<Integer, Integer> entry : lengthFrequencyMap) {
+		    System.out.println("Number of words of length " + entry.getKey() + " is " + entry.getValue());
+	    }
+	    System.out.println("The most frequently occurring word length is " + mostFrequentLengths.get(0).getKey() + ", for word lengths " + mostFrequentLengths.get(0).getValue());
 	}
 	
 	public static int getTotalWords(String text) {	
@@ -48,7 +55,7 @@ public class WordCounter {
 		return average;
 	}
 	
-	public static List<Map.Entry<Integer, Integer>> getWordLengthFrequency(String text) {
+	public static List<Map.Entry<Integer, Integer>> getWordLengthFrequency(String text, boolean sortByKey) {
 	    String[] words = text.split(" ");
 		Map<Integer, Integer> frequencyMap = new TreeMap<>();
 		
@@ -61,14 +68,17 @@ public class WordCounter {
 		
 		List<Map.Entry<Integer, Integer>> frequencyList = new ArrayList<>(frequencyMap.entrySet());
 
-		Collections.sort(frequencyList, (e1, e2) -> e1.getValue().compareTo(e2.getValue()));
-		
+		if(sortByKey) 
+			Collections.sort(frequencyList, (e1, e2) -> e1.getKey().compareTo(e2.getKey()));
+		else
+			Collections.sort(frequencyList, (e1, e2) -> e1.getValue().compareTo(e2.getValue()));
+
 		return frequencyList;
 
 	}
 	
 	public static Map<Integer, List<Integer>> getMostFrequentlyOccuringWordLengths(String text) {
-		List<Map.Entry<Integer, Integer>> frequencyList = getWordLengthFrequency(text);
+		List<Map.Entry<Integer, Integer>> frequencyList = getWordLengthFrequency(text, false);
 		int mostFrequentLengthCount = frequencyList.get(frequencyList.size() - 1).getValue();
 		
 		Map<Integer, List<Integer>> maxFrequencies = new HashMap<>();
@@ -81,7 +91,6 @@ public class WordCounter {
 				maxFrequencies.put(mostFrequentLengthCount, list);
 			}
 		}
-		
 		return maxFrequencies;
 	}
 	
@@ -97,13 +106,14 @@ public class WordCounter {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		text = text.replaceAll("\\.", "");
-		text = text.replaceAll("\\,", "");
 		
 		return text;
 	}
 	
-
-		
+	public static String cleanText(String text) {
+		text = text.replaceAll("\\.", "");
+		text = text.replaceAll("\\,", "");
+		return text;
+	}		
 
 }
