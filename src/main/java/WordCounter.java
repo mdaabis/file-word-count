@@ -3,6 +3,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -35,7 +36,7 @@ public class WordCounter {
 		return getTotalCharactersExcludingSpaces(text) / getTotalWords(text);
 	}
 	
-	public static int getMostFrequentlyOccuringWordLength(String text) {
+	public static List<Map.Entry<Integer, Integer>> getWordLengthFrequency(String text) {
 	    String[] words = text.split(" ");
 		Map<Integer, Integer> frequencyMap = new TreeMap<>();
 		
@@ -46,12 +47,30 @@ public class WordCounter {
 			frequencyMap.put(word.length(), frequencyMap.get(word.length()) + 1);
 		}
 		
-		List<Map.Entry<Integer, Integer>> entryList = new ArrayList<>(frequencyMap.entrySet());
+		List<Map.Entry<Integer, Integer>> frequencyList = new ArrayList<>(frequencyMap.entrySet());
 
-		Collections.sort(entryList, (e1, e2) -> e2.getValue().compareTo(e1.getValue()));
+		Collections.sort(frequencyList, (e1, e2) -> e1.getValue().compareTo(e2.getValue()));
+		
+		return frequencyList;
 
-		return entryList.get(0).getValue();
-
+	}
+	
+	public static Map<Integer, List<Integer>> getMostFrequentlyOccuringWordLengths(String text) {
+		List<Map.Entry<Integer, Integer>> frequencyList = getWordLengthFrequency(text);
+		int mostFrequentLengthCount = frequencyList.get(frequencyList.size() - 1).getValue();
+		
+		Map<Integer, List<Integer>> maxFrequencies = new HashMap<>();
+		maxFrequencies.put(mostFrequentLengthCount, new ArrayList<>());
+		
+		for(Map.Entry<Integer, Integer> entry : frequencyList) {
+			if(entry.getValue() == mostFrequentLengthCount) {
+				List<Integer> list = new ArrayList<>(maxFrequencies.get(mostFrequentLengthCount));
+				list.add(entry.getKey());
+				maxFrequencies.put(mostFrequentLengthCount, list);
+			}
+		}
+		
+		return maxFrequencies;
 	}
 	
 	public static String removeSpaces(String text) {
@@ -66,6 +85,8 @@ public class WordCounter {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		text = text.replaceAll("\\.", "");
+		text = text.replaceAll("\\,", "");
 		
 		return text;
 	}
