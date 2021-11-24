@@ -44,9 +44,9 @@ public class WordCounterTest {
 	
 	@Test
 	public void getAverageWordLengthTest() {		
-		assertEquals(3, wordCounter.getAverageWordLength(data), 0.001);
+		assertEquals(3.286, wordCounter.getAverageWordLength(data), 0.001);
 		assertEquals(0, wordCounter.getAverageWordLength(emptyString()), 0.001);
-		assertEquals(11 / 5, wordCounter.getAverageWordLength(stringWithNumbersAndSpaces()), 0.001);
+		assertEquals((double) 11 / 5, wordCounter.getAverageWordLength(stringWithNumbersAndSpaces()), 0.001);
 	}
 	
 	
@@ -54,9 +54,14 @@ public class WordCounterTest {
 	@Test
 	public void getMostFrequentlyOccuringWordLengthsTest() {
 		Map<Integer, List<Integer>> answerList = new HashMap<>();
-		answerList.put(2, Arrays.asList(4,5));
+		answerList.put(12, Arrays.asList(3));
 		
-		assertEquals(answerList, wordCounter.getMostFrequentlyOccuringWordLengths("Hello world & good morning. The date is 18/05/2016"));
+		Map<Integer, List<Integer>> answerList1 = new HashMap<>();
+		answerList1.put(2, Arrays.asList(4,5));
+		
+		assertEquals(answerList, wordCounter.getMostFrequentlyOccuringWordLengths(data));
+		assertEquals(answerList1, wordCounter.getMostFrequentlyOccuringWordLengths("Hello world & good morning. The date is 18/05/2016"));
+
 
 	}
 	

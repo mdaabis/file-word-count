@@ -1,6 +1,8 @@
 import java.io.IOException;
+import java.math.RoundingMode;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -16,6 +18,12 @@ public class WordCounter {
 	
 	public static void main(String[] args) {
 	    String text = convertFileToString();
+	    System.out.println(getTotalWords(text));
+	    System.out.println(getTotalCharactersExcludingSpaces(text));
+	    System.out.println(getAverageWordLength(text));
+	    System.out.println(getWordLengthFrequency(text));
+	    System.out.println(getMostFrequentlyOccuringWordLengths(text));
+
 	}
 	
 	public static int getTotalWords(String text) {	
@@ -33,7 +41,11 @@ public class WordCounter {
 	public static double getAverageWordLength(String text) {
 		if(getTotalWords(text) == 0)
 			return 0.0;
-		return getTotalCharactersExcludingSpaces(text) / getTotalWords(text);
+		
+		DecimalFormat df = new DecimalFormat("#.###"); // Round to 3 d.p.
+		df.setRoundingMode(RoundingMode.HALF_UP);
+		double average = Double.parseDouble(df.format((double) getTotalCharactersExcludingSpaces(text) / getTotalWords(text))); 
+		return average;
 	}
 	
 	public static List<Map.Entry<Integer, Integer>> getWordLengthFrequency(String text) {
