@@ -18,10 +18,11 @@ If there are many errors in the classes, this is most likely due to Eclipse tryi
 
 ## Assumptions
 Assumptions made for this program are:
+* A word is defined as a series of consecutive characters, separated by a space.
+  * There is always a space separating words even if there is punctuation in between (e.g. at the end of a sentence, there is a full stop but also a space before the start of the next sentence).  
 * Hyphenated words are counted as one word.
 * Formatted numbers (e.g. 18/06/2016) are counted as one word.
 * Some special character should be ignored when counting characters (`.`, `,`, `!`, `:`, `;`, `-`, `(`, `)`, `?`).
-* That there is always a space separating words (e.g. at the end of a sentence, there is a full stop but also a space before the start of the next sentence).
 * Average word length to be calculated using the mean (as opposed to other averages like mode and median).
 * The text does not contain a wide variety of special characters outside of what you might find in average text (e.g. no characters such as `^` or `~`.
 
