@@ -23,10 +23,10 @@ Assumptions made for this program are:
 * Some special character should be ignored when counting characters (`.`, `,`, `!`, `:`, `;`, `-`, `(`, `)`, `?`).
 * That there is always a space separating words (e.g. at the end of a sentence, there is a full stop but also a space before the start of the next sentence).
 * Average word length to be calculated using the mean (as opposed to other averages like mode and median).
-* 
+* The text does not contain a wide variety of special characters outside of what you might find in average text (e.g. no characters such as `^` or `~`.
 
 
 ## Improvements
 * Add a way of differentiating between a `/` used in a formatted date and one used between two words.
-* Use regex to ignore characters we don't want to consider when counting words rather than using the cleanText(String text) method as this would reduce the number of passes we have to do over the file.
+* Use regex to ignore characters we don't want to consider when counting words rather than using the cleanText(String text) method as this would reduce the number of passes we have to do over the file and would allow filtering of special characters not currently accounted for.
 
