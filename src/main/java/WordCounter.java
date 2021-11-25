@@ -16,8 +16,7 @@ public class WordCounter {
 	public static final String FILE_PATH = "C:\\Users\\mosta\\OneDrive\\Documents\\words.txt";
 		
 	public static void main(String[] args) {
-//	    String text = convertFileToString();
-	    String text = "Hello world & good morning. The date is 18/05/2016";
+	    String text = convertFileToString();
 	    text = cleanText(text);
 	    
 	    int wordCount = getTotalWords(text);
