@@ -14,9 +14,7 @@ import java.util.stream.Collectors;
 public class WordCounter {
 	
 	public static final String FILE_PATH = "C:\\Users\\mosta\\OneDrive\\Documents\\words.txt";
-	
-//	TODO check if methods should be static
-	
+		
 	public static void main(String[] args) {
 //	    String text = convertFileToString();
 	    String text = "Hello world & good morning. The date is 18/05/2016";
@@ -163,7 +161,10 @@ public class WordCounter {
 	public static String cleanText(String text) {
 		text = text.replaceAll("\\.", "");
 		text = text.replaceAll("\\,", "");
-		return text;
-	}		
+		text = text.replaceAll("\\-", "");
+		text = text.replaceAll("\\;", "");
+		text = text.replaceAll("\\:", "");
 
+		return text;
+	}
 }
